@@ -16,8 +16,10 @@ public class CDCollectionHandler {
      * @param amounts - Platzgrößen der einzelnen CD-Ständer.
      */
     public CDCollectionHandler(int[] amounts){
-        //TODO: 01 - Konstruktor fertigstellen.
-
+        allCDs = new CompactDisc[4][];
+        for (int i = 0; i < allCDs.length; i++) {
+           allCDs[i] = new CompactDisc[amounts[i]];
+        }
     }
 
     /**
@@ -30,7 +32,10 @@ public class CDCollectionHandler {
      * @return - true, falls ein Platz frei war und die CD hinzugefügt werden konnte, sonst false.
      */
     public boolean addNewCD(int box, int place, String artist, String title){
-        //TODO: 02 - Hinzufügen einer CD
+        if (allCDs[box][place] == null) {
+            allCDs[box][place] = new CompactDisc (artist, title);
+            return true;
+        }
         return false;
     }
 
@@ -43,7 +48,19 @@ public class CDCollectionHandler {
      */
     public String[] getInfo(int box, int place){
         String[] output = new String[2];
-        //TODO: 03 - Informationen zu einer bestimmen CD
+
+        if(allCDs[box][place].getArtist() == null){
+            output[0] = "Empty";
+        } else {
+            output[0] = allCDs[box][place].getArtist();
+        }
+
+        if(allCDs[box][place].getTitle() == null){
+            output[0] = "Empty";
+        } else {
+            output[1] = allCDs[box][place].getTitle();
+        }
+
         return output;
     }
 
@@ -55,7 +72,10 @@ public class CDCollectionHandler {
      * @return - true, falls eine vorhandene CD entfernt wurde; false, falls keine CD zum Entfernen vorhanden war.
      */
     public boolean releaseCD(int box, int place){
-        //TODO: 04 - Entfernen einer bestimmten CD
+        if (allCDs[box][place] != null) {
+            allCDs[box][place] = null;
+            return true;
+        }
         return false;
     }
 
@@ -66,7 +86,11 @@ public class CDCollectionHandler {
      * @return Ein Array, das abwechselnd den jeweiligen Künstler und den jeweiligen Albumtitel enthält. Leere Plätze werden mit "Empty" gefüllt.
      */
     public String[] getAllCDsFrom(int box){
-        //TODO: 05 - Vollständige Informationsausgabe aller CDs - Nach Fertigstellung im MainPanelHandler Zeile 165-167 entkommentieren
+        String[][] helpArray = new String[allCDs[box].length][2];
+        for (int i = 0; i < helpArray.length; i++) {
+            helpArray[i][0] = allCDs[box][i].getArtist();
+            helpArray[i][1] = allCDs[box][i].getTitle();
+        }
         return null;
     }
 
@@ -76,7 +100,9 @@ public class CDCollectionHandler {
      * @param box - Index des Gewählten CD-Ständers
      */
     public void pack(int box){
-        //TODO: 06 - Komprimieren eines CD-Ständers, von unten nach oben
+        for (int i = 0; i < allCDs[box].length; i++) {
+
+        }
     }
 
     /**
